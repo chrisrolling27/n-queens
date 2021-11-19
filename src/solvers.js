@@ -16,16 +16,36 @@
 
 
 window.findNRooksSolution = function(n) {
-  var solution = undefined; //fixme
+  // create a new board with n rows/colums
+  let newBoard = new Board({n: n});
+  // let hasConflicts = true;
+  // create random board
+  let randomInteger = n - 1;
 
-  console.log('Single solution for ' + n + ' rooks:', JSON.stringify(solution));
-  return solution;
+  // This breaks our computer:
+  // while (hasConflicts) {
+  // let randomColIndex = 0;
+  for (let i = 0; i < n; i++) {
+    let randomColIndex = Math.round(Math.random() * randomInteger);
+    newBoard.togglePiece(i, randomColIndex);
+    // check now if there are column conflicts
+    if (newBoard.hasAnyRooksConflicts()) {
+      newBoard.togglePiece(i, randomColIndex);
+      // reset i
+      i--;
+    }
+  }
+  // hasConflicts = newBoard.hasAnyRooksConflicts();
+
+
+  return newBoard.rows();
 };
 
 // return the number of nxn chessboards that exist, with n rooks placed such that none of them can attack each other
 window.countNRooksSolutions = function(n) {
-  var solutionCount = undefined; //fixme
-
+  var solutionCount = n; //fixme
+  // use findrookssolutions, check if the board exists already, if it does, keep iterating, if it doesn't store the board and add to the count
+  //
   console.log('Number of solutions for ' + n + ' rooks:', solutionCount);
   return solutionCount;
 };
